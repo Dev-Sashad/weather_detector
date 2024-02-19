@@ -1,0 +1,57 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Weather Search</title>
+<link href="{% static 'style.css' %}" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+</head>
+<body>
+<div class="container">
+    <form method="POST" action="">
+        {% csrf_token %}
+    <h1>Weather Search</h1>
+    <input type="text" id="location" name="location" placeholder="Enter a country...">
+    <button type="submit" >Search</button>
+    <div class="result" id="weatherResult">
+        {% if messages %}
+        {% for message in messages %}
+        <p>{{message}}</p>
+            <!-- <script>showToast("{{ message }}");</script> -->
+        {% endfor %}
+    {% endif %}
+
+    </div>
+</form>
+</div>
+<br>
+{% if data.country_code %}
+<div class="container">
+    <h5>{{city}}</h5>
+    <h5>Country code: {{data.country_code}}</h5>
+    <h5>Coordinate: {{data.coordinate}}</h5>
+    <h5>Temp: {{data.temp}}</h5>
+    <h5>Pressure: {{data.pressure}}</h5>
+    <h5>Humidity: {{data.humidity}}</h5>
+</div>
+{% endif %}
+
+<script src="{% static 'script/index.js' %}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+  function showToast(msg){
+        toastr.success(msg);
+    }
+ // Initialize Toastr
+ toastr.options = {
+        "closeButton": true,
+        "progressBar": true,
+        "positionClass": "toast-top-right",
+        "timeOut": "5000",
+        "extendedTimeOut": "1000"
+    };
+</script>
+</body>
+</html>
